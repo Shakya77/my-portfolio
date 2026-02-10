@@ -24,7 +24,4 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
-    server: {
-        host: 'finance.test',
-    },
 });

@@ -241,19 +241,21 @@ function ProjectCard({ project }: { project: Project }) {
     );
 }
 
-export default function Projects({ className }: { className?: string }) {
+export default function Projects({ className, page }: { className?: string; page?: boolean }) {
     return (
         <div className={`w-full ${className}`}>
-            <div className='text-center'>
-                <h1 className="text-3xl  font-bold text-gray-900  mb-6">
-                    Works & Projects
-                </h1>
+            {!page && (
+                <div className='text-center'>
+                    <h1 className="text-3xl  font-bold text-gray-900  mb-6">
+                        Works & Projects
+                    </h1>
 
-                <p className='mb-6'>
-                    Take a look at my work and projects. I'm always looking for new opportunities to collaborate and
-                    contribute to exciting projects.
-                </p>
-            </div>
+                    <p className='mb-6'>
+                        Take a look at my work and projects. I'm always looking for new opportunities to collaborate and
+                        contribute to exciting projects.
+                    </p>
+                </div>
+            )}
 
             <Tabs defaultValue="all" className="w-full">
                 <TabsList className=" bg-white mb-8 w-full justify-start" variant="line">

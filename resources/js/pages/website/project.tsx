@@ -10,7 +10,7 @@ export default function Project() {
                 {/* Header */}
                 <Header title="Projects" description="I'm always looking for new opportunities to collaborate and contribute to exciting projects. Here are some of my recent projects." />
 
-                <Projects />
+                <Projects page={true} />
 
             </section>
             <ClickToAction className='mt-8' />
