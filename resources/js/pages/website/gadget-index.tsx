@@ -161,7 +161,7 @@ function SetupCard({ item }: { item: SetupItem }) {
 
 export default function Setup() {
     return (
-        <GuestLayout breadcrumbs="Setup">
+        <GuestLayout breadcrumbs="My-Gadgets">
             <section>
                 {/* Header */}
                 <div className="mb-12">
