@@ -25,7 +25,7 @@ export default defineConfig({
         jsx: 'automatic',
     },
     server: {
-        host: 'finance.test',
+        host: 'my-portfolio.test',
         strictPort: true,
         cors: true,
     },

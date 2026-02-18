@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\GadgetController;
 use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Website\ProjectController;
@@ -32,9 +33,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::get('category', function () {
-        return Inertia::render('category');
-    })->name('category');
+    Route::get('/education', [EducationController::class, 'index'])->name('education.index');
+    Route::post('/education', [EducationController::class, 'store'])->name('education.store');
+    Route::put('/education/{education}', [EducationController::class, 'update'])->name('education.update');
+    Route::delete('/education/{education}', [EducationController::class, 'destroy'])->name('education.destroy');
 });
 
 require __DIR__ . '/settings.php';
