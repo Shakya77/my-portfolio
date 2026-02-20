@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('institution');
+            $table->string('college_name');
             $table->string('degree');
             $table->string('field_of_study');
 
