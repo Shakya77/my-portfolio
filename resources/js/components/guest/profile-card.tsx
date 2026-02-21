@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail, Twitter } from "lucide-react";
 
 export default function ProfileCard({ content }: { content?: string }) {
     return (
@@ -22,7 +22,7 @@ export default function ProfileCard({ content }: { content?: string }) {
 
                 <div className="flex items-center justify-center gap-6">
                     <a
-                        href="https://github.com/bijanshakya"
+                        href="https://github.com/shakya77"
                         target="_blank"
                         rel="noreferrer"
                         aria-label="GitHub"
@@ -32,7 +32,7 @@ export default function ProfileCard({ content }: { content?: string }) {
                     </a>
 
                     <a
-                        href="https://linkedin.com"
+                        href="https://www.linkedin.com/in/bijan-shakya-56b50b2b6/"
                         target="_blank"
                         rel="noreferrer"
                         aria-label="LinkedIn"
@@ -42,17 +42,17 @@ export default function ProfileCard({ content }: { content?: string }) {
                     </a>
 
                     <a
-                        href="https://twitter.com"
+                        href="https://www.instagram.com/bijan.shakya/"
                         target="_blank"
                         rel="noreferrer"
                         aria-label="Twitter"
                         className="p-2 rounded border border-gray-200   text-gray-700   hover:bg-gray-100   hover:text-blue-600   transition-all"
                     >
-                        <Twitter size={20} />
+                        <Instagram size={20} />
                     </a>
 
                     <a
-                        href="mailto:contact@example.com"
+                        href="mailto:bijanshakya145@gmail.com"
                         aria-label="Email"
                         className="p-2 rounded border border-gray-200   text-gray-700   hover:bg-gray-100   hover:text-blue-600   transition-all"
                     >

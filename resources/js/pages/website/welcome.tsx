@@ -46,7 +46,7 @@ export default function Welcome() {
 
             </section>
 
-            <Projects className="mt-12" />
+            <Projects className="mt-12" show={true} />
 
             <ClickToAction className="mt-12" />
 

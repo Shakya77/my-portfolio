@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\GadgetController;
+use App\Http\Controllers\NotifyController;
 use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Website\ProjectController;
 use App\Http\Controllers\Website\ServiceController;
@@ -28,6 +29,8 @@ Route::get('/project', [ProjectController::class, 'index'])->name('project.index
 
 Route::get('/my-gadgets', [GadgetController::class, 'index'])->name('my-gadgets.index');
 
+Route::post('/notify', [NotifyController::class, 'notify'])->name('notify');
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('dashboard', function () {
@@ -38,5 +41,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::resource('experience', ExperienceController::class);
 });
+
+
 
 require __DIR__ . '/settings.php';

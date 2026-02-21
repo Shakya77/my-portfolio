@@ -15,42 +15,38 @@ export interface TimelineItem {
 
 const experienceData: TimelineItem[] = [
     {
-        id: 'exp-1',
-        period: '2022 - Present',
-        title: 'Senior Software Engineer',
-        organization: 'Tech Company Inc.',
-        description: 'Leading development of scalable web applications using React and Node.js. Mentoring junior developers and conducting code reviews.',
-    },
-    {
         id: 'exp-2',
-        period: '2020 - 2022',
-        title: 'Frontend Developer',
-        organization: 'Digital Solutions Ltd.',
-        description: 'Developed responsive user interfaces using React and Tailwind CSS. Improved application performance by 40%.',
+        period: '2025 - 2026',
+        title: 'CTO and Senior Full Stack Developer',
+        organization: 'RATOGURAS TECHNOLOGY PVT. LTD.',
+        description: `Developed and maintained enterprise web applications using Laravel, PHP, JavaScript, and MySQL. Built
+                        REST APIs, implemented authentication systems, optimized queries, and deployed applications on cPanel
+                        servers. Handled bug fixing, performance tuning, and feature enhancements while collaborating in an
+                        agile team environment`,
     },
     {
         id: 'exp-3',
         period: '2019 - 2020',
         title: 'Junior Developer',
         organization: 'StartUp Hub',
-        description: 'Started career building web applications with JavaScript and PHP. Learned best practices in web development.',
+        description: `Specialize in developing and maintaining robust, scalable web applications using the Laravel framework. Experienced in building dynamic, responsive user interfaces with modern frontend technologies, ensuring clean design and intuitive user experiences. Actively involved in the full software development lifecycle-from system architecture and development to testing, optimization, and deployment-delivering high-performance, maintainable solutions focused on usability and client satisfaction.`,
     },
 ];
 
 const educationData: TimelineItem[] = [
     {
         id: 'edu-1',
-        period: '2019 - 2021',
-        title: 'Master of Science in Computer Science',
-        organization: 'University of Technology',
-        description: 'Specialized in web development and cloud computing. GPA: 3.8/4.0',
+        period: '2022 - Present',
+        title: 'Bachelor of Science in Computer Science and Information Technology',
+        organization: 'HIMALAYA DARSHAN COLLEGE, TRIBHUVAN UNIVERSITY',
+        description: '',
     },
     {
         id: 'edu-2',
-        period: '2015 - 2019',
-        title: 'Bachelor of Science in Information Technology',
-        organization: 'National University',
-        description: 'Foundation in computer science fundamentals and software development. GPA: 3.7/4.0',
+        period: '2019 - 2022',
+        title: '+2 Science',
+        organization: 'Shikshadeep Higher Secondary School, NEB',
+        description: '',
     },
 ];
 
