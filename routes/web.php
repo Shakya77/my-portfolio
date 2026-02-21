@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\EducationController;
+use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\GadgetController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Website\ProjectController;
 use App\Http\Controllers\Website\ServiceController;
@@ -34,8 +34,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::resource('posts', PostController::class);
     Route::resource('education', EducationController::class);
+
+    Route::resource('experience', ExperienceController::class);
 });
 
 require __DIR__ . '/settings.php';

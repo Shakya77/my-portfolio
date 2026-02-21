@@ -1,7 +1,7 @@
 import { usePage, useForm } from '@inertiajs/react';
 import { Pencil, Trash2, Plus } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { toast } from 'sonner'; // Simple import, no hook needed!
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
 import {
@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 
 import {
     Table,
@@ -29,12 +30,14 @@ import AppLayout from '@/layouts/app-layout';
 
 interface Education {
     id: number;
-    name: string;
+    college: string;
     institution: string;
     degree: string;
+    abbreviation: string | null;
     field_of_study: string;
     start_year: number;
     end_year: number | null;
+    currently_studying: boolean;
     description: string | null;
     created_at: string;
 }
@@ -50,26 +53,32 @@ export default function Index({ educations }: Props) {
     const [editingEducation, setEditingEducation] = useState<Education | null>(null);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingEducation, setDeletingEducation] = useState<Education | null>(null);
+    const [createCurrentlyStudying, setCreateCurrentlyStudying] = useState(false);
+    const [editCurrentlyStudying, setEditCurrentlyStudying] = useState(false);
 
     // Create form
     const { data: createData, setData: setCreateData, post, processing: createProcessing, errors: createErrors, reset: resetCreate } = useForm({
-        name: '',
+        college: '',
         institution: '',
         degree: '',
+        abbreviation: '',
         field_of_study: '',
         start_year: new Date().getFullYear(),
         end_year: '',
+        currently_studying: false,
         description: '',
     });
 
     // Edit form
     const { data: editData, setData: setEditData, put, processing: editProcessing, errors: editErrors, reset: resetEdit } = useForm({
-        name: '',
+        college: '',
         institution: '',
         degree: '',
+        abbreviation: '',
         field_of_study: '',
         start_year: new Date().getFullYear(),
         end_year: '',
+        currently_studying: false,
         description: '',
     });
 
@@ -80,15 +89,21 @@ export default function Index({ educations }: Props) {
     const handleCreateSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Show loading toast
+        // Prepare data for submission
+        const submitData = {
+            ...createData,
+            end_year: createData.currently_studying ? null : createData.end_year,
+        };
+
         const loadingToast = toast.loading('Creating education record...');
 
         post(route('education.store'), {
+            data: submitData,
             onSuccess: () => {
                 toast.dismiss(loadingToast);
                 setShowCreateModal(false);
                 resetCreate();
-
+                setCreateCurrentlyStudying(false);
             },
             onError: (errors) => {
                 toast.dismiss(loadingToast);
@@ -101,14 +116,22 @@ export default function Index({ educations }: Props) {
         e.preventDefault();
         if (!editingEducation) return;
 
+        // Prepare data for submission
+        const submitData = {
+            ...editData,
+            end_year: editData.currently_studying ? null : editData.end_year,
+        };
+
         const loadingToast = toast.loading('Updating education record...');
 
         put(route('education.update', editingEducation.id), {
+            data: submitData,
             onSuccess: () => {
                 toast.dismiss(loadingToast);
                 setShowEditModal(false);
                 setEditingEducation(null);
                 resetEdit();
+                setEditCurrentlyStudying(false);
             },
             onError: (errors) => {
                 toast.dismiss(loadingToast);
@@ -143,15 +166,36 @@ export default function Index({ educations }: Props) {
     const openEditModal = (education: Education) => {
         setEditingEducation(education);
         setEditData({
-            name: education.name,
+            college: education.college,
             institution: education.institution,
             degree: education.degree,
+            abbreviation: education.abbreviation || '',
             field_of_study: education.field_of_study,
             start_year: education.start_year,
             end_year: education.end_year?.toString() || '',
+            currently_studying: education.currently_studying,
             description: education.description || '',
         });
+        setEditCurrentlyStudying(education.currently_studying);
         setShowEditModal(true);
+    };
+
+    // Handle currently studying checkbox change for create
+    const handleCreateCurrentlyStudyingChange = (checked: boolean) => {
+        setCreateCurrentlyStudying(checked);
+        setCreateData('currently_studying', checked);
+        if (checked) {
+            setCreateData('end_year', '');
+        }
+    };
+
+    // Handle currently studying checkbox change for edit
+    const handleEditCurrentlyStudyingChange = (checked: boolean) => {
+        setEditCurrentlyStudying(checked);
+        setEditData('currently_studying', checked);
+        if (checked) {
+            setEditData('end_year', '');
+        }
     };
 
     // Generate years for dropdown
@@ -193,14 +237,14 @@ export default function Index({ educations }: Props) {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>ID</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>C</TableHead>
+                                <TableHead>College</TableHead>
                                 <TableHead>Institution</TableHead>
                                 <TableHead>Degree</TableHead>
+                                <TableHead>Abbreviation</TableHead>
                                 <TableHead>Field of Study</TableHead>
                                 <TableHead>Start Year</TableHead>
                                 <TableHead>End Year</TableHead>
-                                <TableHead>Description</TableHead>
+                                <TableHead>Status</TableHead>
                                 <TableHead className="text-right">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -208,17 +252,25 @@ export default function Index({ educations }: Props) {
                             {educations.map((education) => (
                                 <TableRow key={education.id}>
                                     <TableCell>{education.id}</TableCell>
-                                    <TableCell className="font-medium">{education.name}</TableCell>
+                                    <TableCell className="font-medium">{education.college}</TableCell>
                                     <TableCell>{education.institution}</TableCell>
                                     <TableCell>{education.degree}</TableCell>
+                                    <TableCell>{education.abbreviation || '-'}</TableCell>
                                     <TableCell>{education.field_of_study}</TableCell>
                                     <TableCell>{education.start_year}</TableCell>
-                                    <TableCell>{education.end_year || 'Present'}</TableCell>
                                     <TableCell>
-                                        {education.description
-                                            ? education.description.substring(0, 30) + '...'
-                                            : '-'
-                                        }
+                                        {education.currently_studying ? 'Present' : education.end_year || '-'}
+                                    </TableCell>
+                                    <TableCell>
+                                        {education.currently_studying ? (
+                                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Currently Studying
+                                            </span>
+                                        ) : (
+                                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                Completed
+                                            </span>
+                                        )}
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <Button
@@ -242,7 +294,7 @@ export default function Index({ educations }: Props) {
                             ))}
                             {educations.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                                    <TableCell colSpan={10} className="text-center py-8 text-gray-500">
                                         No education records found. Click "Add Education" to create one.
                                     </TableCell>
                                 </TableRow>
@@ -265,15 +317,15 @@ export default function Index({ educations }: Props) {
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="create-name">Name *</Label>
+                                    <Label htmlFor="create-college">College *</Label>
                                     <Input
-                                        id="create-name"
-                                        value={createData.name}
-                                        onChange={e => setCreateData('name', e.target.value)}
-                                        placeholder="e.g., Bachelor of Science"
+                                        id="create-college"
+                                        value={createData.college}
+                                        onChange={e => setCreateData('college', e.target.value)}
+                                        placeholder="e.g., St. Xavier's College, Kathmandu"
                                     />
-                                    {createErrors.name && (
-                                        <p className="text-sm text-red-500">{createErrors.name}</p>
+                                    {createErrors.college && (
+                                        <p className="text-sm text-red-500">{createErrors.college}</p>
                                     )}
                                 </div>
                                 <div className="grid gap-2">
@@ -282,7 +334,7 @@ export default function Index({ educations }: Props) {
                                         id="create-institution"
                                         value={createData.institution}
                                         onChange={e => setCreateData('institution', e.target.value)}
-                                        placeholder="e.g., University of Technology"
+                                        placeholder="e.g., Tribhuvan University"
                                     />
                                     {createErrors.institution && (
                                         <p className="text-sm text-red-500">{createErrors.institution}</p>
@@ -297,24 +349,37 @@ export default function Index({ educations }: Props) {
                                         id="create-degree"
                                         value={createData.degree}
                                         onChange={e => setCreateData('degree', e.target.value)}
-                                        placeholder="e.g., Bachelor's, Master's"
+                                        placeholder="e.g., Bachelor of Science in Computer Science and IT"
                                     />
                                     {createErrors.degree && (
                                         <p className="text-sm text-red-500">{createErrors.degree}</p>
                                     )}
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="create-field">Field of Study *</Label>
+                                    <Label htmlFor="create-abbreviation">Abbreviation</Label>
                                     <Input
-                                        id="create-field"
-                                        value={createData.field_of_study}
-                                        onChange={e => setCreateData('field_of_study', e.target.value)}
-                                        placeholder="e.g., Computer Science"
+                                        id="create-abbreviation"
+                                        value={createData.abbreviation}
+                                        onChange={e => setCreateData('abbreviation', e.target.value)}
+                                        placeholder="e.g., BSc CSIT"
                                     />
-                                    {createErrors.field_of_study && (
-                                        <p className="text-sm text-red-500">{createErrors.field_of_study}</p>
+                                    {createErrors.abbreviation && (
+                                        <p className="text-sm text-red-500">{createErrors.abbreviation}</p>
                                     )}
                                 </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="create-field">Field of Study *</Label>
+                                <Input
+                                    id="create-field"
+                                    value={createData.field_of_study}
+                                    onChange={e => setCreateData('field_of_study', e.target.value)}
+                                    placeholder="e.g., Computer Science and Information Technology"
+                                />
+                                {createErrors.field_of_study && (
+                                    <p className="text-sm text-red-500">{createErrors.field_of_study}</p>
+                                )}
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
@@ -335,20 +400,32 @@ export default function Index({ educations }: Props) {
                                     )}
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="create-end-year">End Year</Label>
-                                    <select
-                                        id="create-end-year"
-                                        value={createData.end_year}
-                                        onChange={e => setCreateData('end_year', e.target.value)}
-                                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    >
-                                        <option value="">Present</option>
-                                        {years.map(year => (
-                                            <option key={year} value={year}>{year}</option>
-                                        ))}
-                                    </select>
-                                    {createErrors.end_year && (
-                                        <p className="text-sm text-red-500">{createErrors.end_year}</p>
+                                    <div className="flex items-center space-x-2 mb-2">
+                                        <Checkbox
+                                            id="create-currently-studying"
+                                            checked={createCurrentlyStudying}
+                                            onCheckedChange={handleCreateCurrentlyStudyingChange}
+                                        />
+                                        <Label htmlFor="create-currently-studying">Currently Studying</Label>
+                                    </div>
+                                    {!createCurrentlyStudying && (
+                                        <>
+                                            <Label htmlFor="create-end-year">End Year</Label>
+                                            <select
+                                                id="create-end-year"
+                                                value={createData.end_year}
+                                                onChange={e => setCreateData('end_year', e.target.value)}
+                                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            >
+                                                <option value="">Select Year</option>
+                                                {years.map(year => (
+                                                    <option key={year} value={year}>{year}</option>
+                                                ))}
+                                            </select>
+                                            {createErrors.end_year && (
+                                                <p className="text-sm text-red-500">{createErrors.end_year}</p>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             </div>
@@ -374,6 +451,7 @@ export default function Index({ educations }: Props) {
                                 onClick={() => {
                                     setShowCreateModal(false);
                                     resetCreate();
+                                    setCreateCurrentlyStudying(false);
                                 }}
                             >
                                 Cancel
@@ -399,15 +477,15 @@ export default function Index({ educations }: Props) {
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="edit-name">Name *</Label>
+                                    <Label htmlFor="edit-college">College *</Label>
                                     <Input
-                                        id="edit-name"
-                                        value={editData.name}
-                                        onChange={e => setEditData('name', e.target.value)}
-                                        placeholder="e.g., Bachelor of Science"
+                                        id="edit-college"
+                                        value={editData.college}
+                                        onChange={e => setEditData('college', e.target.value)}
+                                        placeholder="e.g., St. Xavier's College, Kathmandu"
                                     />
-                                    {editErrors.name && (
-                                        <p className="text-sm text-red-500">{editErrors.name}</p>
+                                    {editErrors.college && (
+                                        <p className="text-sm text-red-500">{editErrors.college}</p>
                                     )}
                                 </div>
                                 <div className="grid gap-2">
@@ -416,7 +494,7 @@ export default function Index({ educations }: Props) {
                                         id="edit-institution"
                                         value={editData.institution}
                                         onChange={e => setEditData('institution', e.target.value)}
-                                        placeholder="e.g., University of Technology"
+                                        placeholder="e.g., Tribhuvan University"
                                     />
                                     {editErrors.institution && (
                                         <p className="text-sm text-red-500">{editErrors.institution}</p>
@@ -431,24 +509,37 @@ export default function Index({ educations }: Props) {
                                         id="edit-degree"
                                         value={editData.degree}
                                         onChange={e => setEditData('degree', e.target.value)}
-                                        placeholder="e.g., Bachelor's, Master's"
+                                        placeholder="e.g., Bachelor of Science in Computer Science and IT"
                                     />
                                     {editErrors.degree && (
                                         <p className="text-sm text-red-500">{editErrors.degree}</p>
                                     )}
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="edit-field">Field of Study *</Label>
+                                    <Label htmlFor="edit-abbreviation">Abbreviation</Label>
                                     <Input
-                                        id="edit-field"
-                                        value={editData.field_of_study}
-                                        onChange={e => setEditData('field_of_study', e.target.value)}
-                                        placeholder="e.g., Computer Science"
+                                        id="edit-abbreviation"
+                                        value={editData.abbreviation}
+                                        onChange={e => setEditData('abbreviation', e.target.value)}
+                                        placeholder="e.g., BSc CSIT"
                                     />
-                                    {editErrors.field_of_study && (
-                                        <p className="text-sm text-red-500">{editErrors.field_of_study}</p>
+                                    {editErrors.abbreviation && (
+                                        <p className="text-sm text-red-500">{editErrors.abbreviation}</p>
                                     )}
                                 </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="edit-field">Field of Study *</Label>
+                                <Input
+                                    id="edit-field"
+                                    value={editData.field_of_study}
+                                    onChange={e => setEditData('field_of_study', e.target.value)}
+                                    placeholder="e.g., Computer Science and Information Technology"
+                                />
+                                {editErrors.field_of_study && (
+                                    <p className="text-sm text-red-500">{editErrors.field_of_study}</p>
+                                )}
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
@@ -469,20 +560,32 @@ export default function Index({ educations }: Props) {
                                     )}
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="edit-end-year">End Year</Label>
-                                    <select
-                                        id="edit-end-year"
-                                        value={editData.end_year}
-                                        onChange={e => setEditData('end_year', e.target.value)}
-                                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    >
-                                        <option value="">Present</option>
-                                        {years.map(year => (
-                                            <option key={year} value={year}>{year}</option>
-                                        ))}
-                                    </select>
-                                    {editErrors.end_year && (
-                                        <p className="text-sm text-red-500">{editErrors.end_year}</p>
+                                    <div className="flex items-center space-x-2 mb-2">
+                                        <Checkbox
+                                            id="edit-currently-studying"
+                                            checked={editCurrentlyStudying}
+                                            onCheckedChange={handleEditCurrentlyStudyingChange}
+                                        />
+                                        <Label htmlFor="edit-currently-studying">Currently Studying</Label>
+                                    </div>
+                                    {!editCurrentlyStudying && (
+                                        <>
+                                            <Label htmlFor="edit-end-year">End Year</Label>
+                                            <select
+                                                id="edit-end-year"
+                                                value={editData.end_year}
+                                                onChange={e => setEditData('end_year', e.target.value)}
+                                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            >
+                                                <option value="">Select Year</option>
+                                                {years.map(year => (
+                                                    <option key={year} value={year}>{year}</option>
+                                                ))}
+                                            </select>
+                                            {editErrors.end_year && (
+                                                <p className="text-sm text-red-500">{editErrors.end_year}</p>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             </div>
@@ -509,6 +612,7 @@ export default function Index({ educations }: Props) {
                                     setShowEditModal(false);
                                     setEditingEducation(null);
                                     resetEdit();
+                                    setEditCurrentlyStudying(false);
                                 }}
                             >
                                 Cancel
@@ -532,8 +636,12 @@ export default function Index({ educations }: Props) {
                     </DialogHeader>
                     <div className="py-4">
                         <p className="text-sm text-gray-500">
-                            Education: <span className="font-medium text-gray-900">
-                                {deletingEducation?.degree} in {deletingEducation?.field_of_study}
+                            Degree: <span className="font-medium text-gray-900">
+                                {deletingEducation?.degree} {deletingEducation?.abbreviation ? `(${deletingEducation.abbreviation})` : ''}
+                            </span>
+                            <br />
+                            College: <span className="font-medium text-gray-900">
+                                {deletingEducation?.college}
                             </span>
                             <br />
                             Institution: <span className="font-medium text-gray-900">

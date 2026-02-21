@@ -14,17 +14,15 @@ return new class extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('institution');
-            $table->string('college_name');
-            $table->string('degree');
-            $table->string('field_of_study');
-
+            $table->text('college');               // e.g., St. Xavier's College, Kathmandu
+            $table->text('institution');           // e.g., Tribhuvan University
+            $table->text('degree');                // e.g., Bachelor of Science in Computer Science and IT
+            $table->text('abbreviation')->nullable(); // e.g., BSc CSIT
+            $table->text('field_of_study');        // e.g., Computer Science and Information Technology
             $table->year('start_year');
-            $table->year('end_year')->nullable();
-
-            $table->text('description')->nullable();
-
+            $table->year('end_year')->nullable();    // NULL if ongoing
+            $table->boolean('currently_studying')->default(false); // true for ongoing
+            $table->text('description')->nullable(); // optional
             $table->timestamps();
         });
     }

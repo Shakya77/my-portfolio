@@ -10,23 +10,21 @@ class Education extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'college',
         'institution',
         'degree',
+        'abbreviation',
         'field_of_study',
         'start_year',
         'end_year',
+        'currently_studying',
         'description',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'start_year' => 'integer',
         'end_year' => 'integer',
+        'currently_studying' => 'boolean',
     ];
 
     /**
