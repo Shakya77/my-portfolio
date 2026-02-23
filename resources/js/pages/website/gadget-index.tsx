@@ -84,29 +84,29 @@ const setupItems: SetupItem[] = [
 
 function SetupCard({ item }: { item: SetupItem }) {
     return (
-        <div className="border border-gray-200 dark:border-gray-800 rounded overflow-hidden hover:border-blue-600 dark:hover:border-blue-400 transition-colors">
+        <div className="bg-[#0f0f0f] rounded-xl overflow-hidden hover:bg-[#141414] transition-all duration-300">
             {/* Image */}
-            <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
+            <div className="relative w-full h-48 bg-[#1a1a1a] overflow-hidden">
                 <img
                     src={item.image || "/placeholder.svg"}
                     alt={item.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 opacity-80 hover:opacity-100"
                 />
             </div>
 
             {/* Content */}
             <div className="p-6">
                 <div className="mb-2">
-                    <span className="text-xs px-2 py-1 border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 rounded">
+                    <span className="text-xs px-2 py-1 bg-[#eb5d3a]/10 text-[#eb5d3a] rounded-lg">
                         {item.category}
                     </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-50 mb-2">
+                <h3 className="text-xl font-bold text-white mb-2">
                     {item.name}
                 </h3>
 
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
+                <p className="text-[#9f9f9f] text-sm mb-4 leading-relaxed">
                     {item.description}
                 </p>
 
@@ -117,28 +117,28 @@ function SetupCard({ item }: { item: SetupItem }) {
                             <Star
                                 key={i}
                                 size={16}
-                                className={i < Math.floor(item.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300 dark:text-gray-700'}
+                                className={i < Math.floor(item.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-[#2a2a2a]'}
                             />
                         ))}
                     </div>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{item.rating}</span>
+                    <span className="text-sm font-semibold text-[#cecece]">{item.rating}</span>
                 </div>
 
                 {/* Review */}
-                <div className="border-l-4 border-blue-600 pl-4 py-3 mb-4 bg-gray-50 dark:bg-gray-900">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+                <div className="border-l-4 border-[#eb5d3a] pl-4 py-3 mb-4 bg-[#eb5d3a]/5 rounded-r-xl">
+                    <p className="text-sm text-[#9f9f9f] italic">
                         "{item.review}"
                     </p>
                 </div>
 
                 {/* Specs */}
                 <div className="mb-4">
-                    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 uppercase">Specifications</p>
+                    <p className="text-xs font-semibold text-[#cecece] mb-2 uppercase">Specifications</p>
                     <div className="flex flex-wrap gap-2">
                         {item.specs.map((spec) => (
                             <span
                                 key={spec}
-                                className="text-xs px-2 py-1 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded"
+                                className="text-xs px-2 py-1 bg-[#1a1a1a] text-[#cecece] rounded-lg"
                             >
                                 {spec}
                             </span>
@@ -148,8 +148,8 @@ function SetupCard({ item }: { item: SetupItem }) {
 
                 {/* Price */}
                 {item.price && (
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-                        <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+                    <div className="pt-4 border-t border-[#1a1a1a]">
+                        <p className="text-lg font-semibold text-[#eb5d3a]">
                             {item.price}
                         </p>
                     </div>
@@ -165,27 +165,27 @@ export default function Setup() {
             <section>
                 {/* Header */}
                 <div className="mb-12">
-                    <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-50 mb-4">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
                         My Setup & Tools
                     </h1>
-                    <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
+                    <p className="text-base sm:text-lg text-[#9f9f9f] leading-relaxed max-w-3xl">
                         Here's a detailed look at the tools and equipment I use daily for development, design, and content creation. Each item has been carefully selected for quality, performance, and productivity.
                     </p>
                 </div>
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-16">
-                    <div className="border border-gray-200 dark:border-gray-800 p-6 rounded">
-                        <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">6</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Total Devices</p>
+                    <div className="bg-[#0f0f0f] p-6 rounded-xl">
+                        <p className="text-3xl font-bold text-[#eb5d3a] mb-2">6</p>
+                        <p className="text-sm text-[#9f9f9f]">Total Devices</p>
                     </div>
-                    <div className="border border-gray-200 dark:border-gray-800 p-6 rounded">
-                        <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">4.9</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Average Rating</p>
+                    <div className="bg-[#0f0f0f] p-6 rounded-xl">
+                        <p className="text-3xl font-bold text-[#eb5d3a] mb-2">4.9</p>
+                        <p className="text-sm text-[#9f9f9f]">Average Rating</p>
                     </div>
-                    <div className="border border-gray-200 dark:border-gray-800 p-6 rounded">
-                        <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">$4K+</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Total Investment</p>
+                    <div className="bg-[#0f0f0f] p-6 rounded-xl">
+                        <p className="text-3xl font-bold text-[#eb5d3a] mb-2">$4K+</p>
+                        <p className="text-sm text-[#9f9f9f]">Total Investment</p>
                     </div>
                 </div>
 

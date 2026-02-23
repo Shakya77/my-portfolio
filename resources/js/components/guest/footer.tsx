@@ -2,12 +2,12 @@ import { Link } from "@inertiajs/react";
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-gray-50 border-t border-gray-200/60 text-center py-6 mt-12">
-            <p className="text-sm text-gray-500">
+        <footer className="w-full bg-[#0f0f0f] border-t border-[#1a1a1a] text-center py-8 mt-16">
+            <p className="text-sm text-[#9f9f9f]">
                 &copy; {new Date().getFullYear()}{" "}
                 <Link
                     href="/"
-                    className="font-semibold text-gray-700 hover:text-indigo-600 transition-colors duration-300"
+                    className="font-semibold text-[#eb5d3a] hover:text-white transition-colors duration-300"
                 >
                     Bijan Shakya
                 </Link>{""}

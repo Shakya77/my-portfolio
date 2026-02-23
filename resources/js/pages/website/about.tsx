@@ -60,11 +60,11 @@ export default function About() {
 
                 {/* RIGHT - Introduction */}
                 <div className="w-full md:w-3/5 flex flex-col justify-center p-4">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
                         I'm Bijan Shakya, a Web Developer.
                     </h1>
 
-                    <p className="text-justify text-gray-600   leading-relaxed mb-8">
+                    <p className="text-justify text-[#9f9f9f] leading-relaxed mb-8">
                         I am a passionate and detail-oriented individual with a strong foundation in web development,
                         particularly using Laravel and JavaScript. I have hands-on experience with modern front-end tools like
                         ReactJS, and I enjoy building dynamic, user-friendly web applications. I am always eager to learn new
@@ -77,19 +77,17 @@ export default function About() {
             </section>
 
             {/* Experience Section */}
-            <section className="mt-8 border-gray-200  ">
+            <section className="mt-8">
                 <div className="flex flex-col md:flex-row gap-8">
-                    {/* Experience Section */}
                     <div className="w-full md:w-1/2">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">
                             Experience
                         </h2>
                         <TimelineList items={experienceData} icon={Briefcase} />
                     </div>
 
-                    {/* Education Section */}
                     <div className="w-full md:w-1/2">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">
                             Education
                         </h2>
                         <TimelineList items={educationData} icon={GraduationCap} />
