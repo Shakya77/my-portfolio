@@ -57,9 +57,9 @@ const projects: Project[] = [
 function ProjectCard({ project }: { project: Project }) {
     const getTypeColor = (type?: string) => {
         switch (type) {
-            case 'open-source': return 'border-green-200 bg-green-50 text-green-700';
-            case 'private': return 'border-red-200 bg-red-50 text-red-700';
-            case 'personal': return 'border-blue-200 bg-blue-50 text-blue-700';
+            case 'open-source': return 'border-emerald-200 bg-emerald-50 text-emerald-700';
+            case 'private': return 'border-rose-200 bg-rose-50 text-rose-700';
+            case 'personal': return 'border-indigo-200 bg-indigo-50 text-indigo-700';
             default: return 'border-gray-200 bg-gray-50 text-gray-700';
         }
     };
@@ -74,22 +74,22 @@ function ProjectCard({ project }: { project: Project }) {
     };
 
     return (
-        <div className="border border-gray-200 rounded overflow-hidden hover:border-blue-600 transition-colors">
+        <div className="border border-gray-200 rounded-xl overflow-hidden hover:border-indigo-300 hover:shadow-md transition-all duration-300 bg-white">
             {/* Project Image */}
-            <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
+            <div className="relative w-full h-40 sm:h-48 bg-gray-100 overflow-hidden">
                 <img
                     src={project.image || "https://placehold.co/600x400?text=No+Image"}
                     alt={project.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
             </div>
 
             {/* Content */}
-            <div className="p-6">
-                <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900 flex-1">{project.title}</h3>
+            <div className="p-5 sm:p-6">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex-1">{project.title}</h3>
                     {project.type && (
-                        <span className={`text-xs px-2 py-1 border rounded whitespace-nowrap ${getTypeColor(project.type)}`}>
+                        <span className={`text-xs px-2 py-1 border rounded-md font-medium whitespace-nowrap ${getTypeColor(project.type)}`}>
                             {getTypeLabel(project.type)}
                         </span>
                     )}
@@ -100,7 +100,7 @@ function ProjectCard({ project }: { project: Project }) {
                 {/* Technologies */}
                 <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech) => (
-                        <span key={tech} className="text-xs px-3 py-1 border border-gray-200 text-gray-700 rounded">
+                        <span key={tech} className="text-xs px-3 py-1 border border-gray-200 text-gray-600 rounded-md bg-gray-50">
                             {tech}
                         </span>
                     ))}
@@ -113,7 +113,7 @@ function ProjectCard({ project }: { project: Project }) {
                             href={project.link}
                             target="_blank"
                             rel="noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded text-sm transition-all"
+                            className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 rounded-lg text-sm transition-all duration-300"
                         >
                             <ExternalLink size={16} />
                             View Project
@@ -124,7 +124,7 @@ function ProjectCard({ project }: { project: Project }) {
                             href={project.github}
                             target="_blank"
                             rel="noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded text-sm transition-all"
+                            className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 rounded-lg text-sm transition-all duration-300"
                         >
                             <Github size={16} />
                             GitHub
@@ -141,8 +141,8 @@ export default function Projects({ className, show }: { className?: string, show
         <div className={`w-full ${className}`}>
 
             {show && (<div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Works & Projects</h1>
-                <p>Take a look at my work and projects. I'm always looking for new opportunities to collaborate and contribute to exciting projects.</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Works & Projects</h1>
+                <p className="text-gray-600">Take a look at my work and projects. I'm always looking for new opportunities to collaborate and contribute to exciting projects.</p>
             </div>)}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {projects.map((project) => (

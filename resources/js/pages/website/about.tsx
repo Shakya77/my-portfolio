@@ -53,14 +53,14 @@ const educationData: TimelineItem[] = [
 export default function About() {
     return (
         <GuestLayout breadcrumbs="About">
-            <section className="flex flex-col md:flex-row items-stretch gap-8">
+            <section className="flex flex-col md:flex-row items-stretch gap-6 sm:gap-8">
 
                 {/* LEFT - Profile Card */}
                 <ProfileCard />
 
                 {/* RIGHT - Introduction */}
                 <div className="w-full md:w-3/5 flex flex-col justify-center p-4">
-                    <h1 className="text-5xl font-bold text-gray-900   mb-6">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                         I'm Bijan Shakya, a Web Developer.
                     </h1>
 
@@ -81,7 +81,7 @@ export default function About() {
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Experience Section */}
                     <div className="w-full md:w-1/2">
-                        <h2 className="text-3xl font-bold text-gray-900   mb-8">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
                             Experience
                         </h2>
                         <TimelineList items={experienceData} icon={Briefcase} />
@@ -89,7 +89,7 @@ export default function About() {
 
                     {/* Education Section */}
                     <div className="w-full md:w-1/2">
-                        <h2 className="text-3xl font-bold text-gray-900   mb-8">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
                             Education
                         </h2>
                         <TimelineList items={educationData} icon={GraduationCap} />

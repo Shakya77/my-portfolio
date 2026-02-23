@@ -1,32 +1,32 @@
-import { Github, Instagram, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 
 export default function ProfileCard({ content }: { content?: string }) {
     return (
-        <div className="w-full md:w-2/8 border border-gray-200   p-8">
+        <div className="w-full md:w-2/8 border border-gray-200 rounded-xl p-6 sm:p-8 bg-white shadow-sm">
 
             <div className="flex flex-col items-center text-center">
                 <img
                     src="/images/profile.jpg"
                     alt="Bijan Shakya"
-                    className="h-72  object-cover rounded"
+                    className="h-56 sm:h-72 object-cover rounded-lg"
                 />
 
                 {content && (
-                    <h2 className="mt-8 text-3xl font-bold text-gray-900  ">
+                    <h2 className="mt-6 text-2xl sm:text-3xl font-bold text-gray-900">
                         {content ?? 'Bijan Shakya'}
                     </h2>
                 )}
 
                 {/* Divider */}
-                <div className="my-8 w-full border-t border-gray-200  " />
+                <div className="my-6 w-full border-t border-gray-200" />
 
-                <div className="flex items-center justify-center gap-6">
+                <div className="flex items-center justify-center gap-4">
                     <a
                         href="https://github.com/shakya77"
                         target="_blank"
                         rel="noreferrer"
                         aria-label="GitHub"
-                        className="p-2 rounded border border-gray-200   text-gray-700   hover:bg-gray-100   hover:text-blue-600   transition-all"
+                        className="p-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all duration-300"
                     >
                         <Github size={20} />
                     </a>
@@ -36,7 +36,7 @@ export default function ProfileCard({ content }: { content?: string }) {
                         target="_blank"
                         rel="noreferrer"
                         aria-label="LinkedIn"
-                        className="p-2 rounded border border-gray-200   text-gray-700   hover:bg-gray-100   hover:text-blue-600   transition-all"
+                        className="p-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all duration-300"
                     >
                         <Linkedin size={20} />
                     </a>
@@ -45,8 +45,8 @@ export default function ProfileCard({ content }: { content?: string }) {
                         href="https://www.instagram.com/bijan.shakya/"
                         target="_blank"
                         rel="noreferrer"
-                        aria-label="Twitter"
-                        className="p-2 rounded border border-gray-200   text-gray-700   hover:bg-gray-100   hover:text-blue-600   transition-all"
+                        aria-label="Instagram"
+                        className="p-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all duration-300"
                     >
                         <Instagram size={20} />
                     </a>
@@ -54,7 +54,7 @@ export default function ProfileCard({ content }: { content?: string }) {
                     <a
                         href="mailto:bijanshakya145@gmail.com"
                         aria-label="Email"
-                        className="p-2 rounded border border-gray-200   text-gray-700   hover:bg-gray-100   hover:text-blue-600   transition-all"
+                        className="p-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all duration-300"
                     >
                         <Mail size={20} />
                     </a>
