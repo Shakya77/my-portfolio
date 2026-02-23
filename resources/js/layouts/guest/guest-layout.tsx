@@ -1,6 +1,7 @@
 import { Head } from "@inertiajs/react";
 import Footer from "@/components/guest/footer";
 import Navbar from "@/components/guest/navbar";
+import { Toaster } from "sonner";
 
 export default function GuestLayout({
     children,
@@ -24,6 +25,11 @@ export default function GuestLayout({
             </main>
 
             <Footer />
+            <Toaster
+                position="top-right"
+                richColors
+                closeButton
+            />
         </>
     );
 }

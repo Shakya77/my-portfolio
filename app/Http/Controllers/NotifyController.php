@@ -31,10 +31,6 @@ class NotifyController extends Controller
 
         Mail::to(config('mail.from.address'))->send(new NotifyAdminMail($email, $query));
 
-        return redirect()->back()->with([
-            'flash' => [
-                'success' => 'Message sent successfully!'
-            ]
-        ]);
+        return redirect()->back()->with('success', 'Your message has been sent successfully! We will get back to you soon.');
     }
 }
