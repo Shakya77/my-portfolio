@@ -40,7 +40,16 @@
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMNS5YM2JL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
+        gtag('config', 'G-NMNS5YM2JL');
+    </script>
     @viteReactRefresh
     @routes
     @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
