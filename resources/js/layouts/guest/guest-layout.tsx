@@ -1,8 +1,6 @@
 import { Head } from "@inertiajs/react";
 import Footer from "@/components/guest/footer";
 import Navbar from "@/components/guest/navbar";
-import CursorEffect from "@/components/guest/cursor-effect";
-import PageLoader from "@/components/guest/page-loader";
 import { Toaster } from "sonner";
 
 export default function GuestLayout({

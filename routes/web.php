@@ -37,9 +37,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::resource('education', EducationController::class);
-
-    Route::resource('experience', ExperienceController::class);
 });
 
 

@@ -1,4 +1,4 @@
-import { Code, Smartphone, Database, Server, Palette, Zap } from 'lucide-react';
+import { Code, Smartphone, Database, Server, Zap } from 'lucide-react';
 import ServiceBlock, { type Service } from '@/components/guest/block';
 import ClickToAction from '@/components/guest/click-to-action';
 import Header from '@/components/guest/header';
