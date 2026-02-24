@@ -19,8 +19,6 @@ export default function GuestLayout({
                 />
                 <meta name="csrf-token" content={document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')} />
             </Head>
-            {/* <PageLoader /> */}
-            {/* <CursorEffect /> */}
             <Navbar />
             <main className="flex mt-8 justify-center px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-7xl">
