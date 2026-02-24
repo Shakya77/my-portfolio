@@ -10,7 +10,11 @@ import { Ziggy } from './ziggy'; // Import Ziggy configuration
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 // Define the global route helper correctly
-window.route = (name: string, params?: any, absolute?: boolean) => {
+window.route = (
+    name: string,
+    params?: Record<string, unknown> | string | number,
+    absolute?: boolean
+) => {
     return routeFn(name, params, absolute, Ziggy);
 };
 

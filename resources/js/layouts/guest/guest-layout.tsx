@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
+import { Toaster } from "sonner";
 import Footer from "@/components/guest/footer";
 import Navbar from "@/components/guest/navbar";
-import { Toaster } from "sonner";
 
 export default function GuestLayout({
     children,
